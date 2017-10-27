@@ -10,7 +10,7 @@ from common.q_learning_agent import QLearningAgent
 
 class CartPoleAgent(QLearningAgent):
     def __init__(self, state_size, action_size):
-        super().__init__(state_size, action_size)
+        super().__init__(state_size, action_size, 'models/cartpole-v0.h5')
 
     def build_model(self):
         model = Sequential()
@@ -18,10 +18,6 @@ class CartPoleAgent(QLearningAgent):
         model.add(Dense(12, activation='relu'))
         model.add(Dense(self.action_size))
         model.compile(Adam(lr=0.001), 'mse')
-
-        # load the weights of the model if reusing previous training session
-        if os.path.isfile('models/cartpole-v0.h5'):
-            model.load_weights('models/cartpole-v0.h5')
         return model
 
 
@@ -32,5 +28,5 @@ if __name__ == '__main__':
     gym.train(agent, 1000)
     gym.run(agent, 500)
 
-    agent.model.save_weights('models/cartpole-v0.h5', overwrite=True)
+    agent.save_weights
     gym.close

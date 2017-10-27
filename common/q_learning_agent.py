@@ -1,13 +1,15 @@
 import abc
+import os
 from collections import deque
 import numpy as np
 import random
 
 
 class QLearningAgent:
-    def __init__(self, state_size, action_size):
+    def __init__(self, state_size, action_size, weight_file):
         self.state_size = state_size
         self.action_size = action_size
+        self.weight_file = weight_file
 
         # hyperparameters
         self.gamma = 0.95  # discount rate on future rewards
@@ -20,9 +22,16 @@ class QLearningAgent:
         self.model = self.build_model()
         self.memory = deque(maxlen=50000)
 
+        # load the weights of the model if reusing previous training session
+        if os.path.isfile(weight_file):
+            self.model.load_weights(weight_file)
+
     @abc.abstractmethod
     def build_model(self):
         return None
+
+    def save_weights(self):
+        self.model.save_weights('models/cartpole-v0.h5', overwrite=True)
 
     def select_action(self, state, do_train=True):
         if do_train and np.random.rand() <= self.epsilon:
