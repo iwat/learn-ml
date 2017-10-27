@@ -3,12 +3,10 @@ from gym import wrappers
 
 
 class GymRunner:
-    def __init__(self, env_id, monitor_dir, max_timesteps=100000):
-        self.monitor_dir = monitor_dir
+    def __init__(self, env_id, max_timesteps=100000):
         self.max_timesteps = max_timesteps
 
         self.env = gym.make(env_id)
-        #self.env = wrappers.Monitor(self.env, monitor_dir, force=True)
 
     def calc_reward(self, state, action, gym_reward, next_state, done):
         return gym_reward
@@ -45,6 +43,5 @@ class GymRunner:
             print("episode: {}/{} | score: {} | e: {:.3f}".format(
                 episode + 1, num_episodes, total_reward, agent.epsilon))
 
-    def close_and_upload(self, api_key):
+    def close(self):
         self.env.close()
-        #gym.upload(self.monitor_dir, api_key=api_key)
