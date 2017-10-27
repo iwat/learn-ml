@@ -1,8 +1,8 @@
 import os
 
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.optimizers import Adam
 
 from gym_runner import GymRunner
 from q_learning_agent import QLearningAgent
@@ -25,11 +25,11 @@ class CartPoleAgent(QLearningAgent):
 
 
 if __name__ == "__main__":
-    gym = GymRunner('CartPole-v0')
+    gym = GymRunner('CartPole-v0', 'gymresults/cartpole-v0')
     agent = CartPoleAgent()
 
     gym.train(agent, 1000)
     gym.run(agent, 500)
 
     agent.model.save_weights("models/cartpole-v0.h5", overwrite=True)
-    gym.close
+    gym.close_and_upload
