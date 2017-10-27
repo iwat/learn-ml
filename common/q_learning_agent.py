@@ -21,6 +21,7 @@ class QLearningAgent:
         # agent state
         self.model = self.build_model()
         self.memory = deque(maxlen=50000)
+        self.model.summary()
 
         # load the weights of the model if reusing previous training session
         if os.path.isfile(weight_file):
