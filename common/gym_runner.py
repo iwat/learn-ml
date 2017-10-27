@@ -17,10 +17,10 @@ class GymRunner:
     def calc_reward(self, state, action, gym_reward, next_state, done):
         return gym_reward
 
-    def train(self, agent, num_episodes):
-        self.run(agent, num_episodes, do_train=True)
+    def train(self, agent, num_episodes, autosave=True):
+        self.run(agent, num_episodes, autosave=True, do_train=True)
 
-    def run(self, agent, num_episodes, do_train=False):
+    def run(self, agent, num_episodes, autosave=True, do_train=False):
         for episode in range(num_episodes):
             state = self.env.reset().reshape(1, self.env.observation_space.shape[0])
             total_reward = 0
@@ -36,6 +36,8 @@ class GymRunner:
                 # record the results of the step
                 if do_train:
                     agent.record(state, action, reward, next_state, done)
+                    if t % 10 == 0:
+                        agent.save_weights
 
                 total_reward += reward
                 state = next_state
