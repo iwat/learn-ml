@@ -36,8 +36,6 @@ class GymRunner:
                 # record the results of the step
                 if do_train:
                     agent.record(state, action, reward, next_state, done)
-                    if t % 10 == 0:
-                        agent.save_weights
 
                 total_reward += reward
                 state = next_state
@@ -47,6 +45,8 @@ class GymRunner:
             # train the agent based on a sample of past experiences
             if do_train:
                 agent.replay()
+                if episode % 10 == 0:
+                    agent.save_weights
 
             print("episode: {}/{} | score: {} | e: {:.3f}".format(
                 episode + 1, num_episodes, total_reward, agent.epsilon))
