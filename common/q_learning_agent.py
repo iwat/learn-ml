@@ -18,7 +18,7 @@ class QLearningAgent:
 
         # agent state
         self.model = self.build_model()
-        self.memory = deque(maxlen=2000)
+        self.memory = deque(maxlen=50000)
 
     @abc.abstractmethod
     def build_model(self):
