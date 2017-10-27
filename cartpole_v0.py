@@ -9,14 +9,14 @@ from common.q_learning_agent import QLearningAgent
 
 
 class CartPoleAgent(QLearningAgent):
-    def __init__(self):
-        super().__init__(4, 2)
+    def __init__(self, state_size, action_size):
+        super().__init__(state_size, action_size)
 
     def build_model(self):
         model = Sequential()
-        model.add(Dense(12, activation='relu', input_dim=4))
+        model.add(Dense(12, activation='relu', input_dim=self.state_size))
         model.add(Dense(12, activation='relu'))
-        model.add(Dense(2))
+        model.add(Dense(self.action_size))
         model.compile(Adam(lr=0.001), 'mse')
 
         # load the weights of the model if reusing previous training session
@@ -27,7 +27,7 @@ class CartPoleAgent(QLearningAgent):
 
 if __name__ == '__main__':
     gym = GymRunner('CartPole-v0')
-    agent = CartPoleAgent()
+    agent = CartPoleAgent(gym.state_size(), gym.action_size())
 
     gym.train(agent, 1000)
     gym.run(agent, 500)

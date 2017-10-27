@@ -8,6 +8,12 @@ class GymRunner:
 
         self.env = gym.make(env_id)
 
+    def state_size(self):
+        return self.env.observation_space.shape[0]
+
+    def action_size(self):
+        return self.env.action_space.n
+
     def calc_reward(self, state, action, gym_reward, next_state, done):
         return gym_reward
 
