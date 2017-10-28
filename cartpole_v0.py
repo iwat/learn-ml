@@ -16,7 +16,7 @@ class CartPoleAgent(QLearningAgent):
         model = Sequential()
         model.add(Dense(12, activation='relu', input_dim=self.state_size))
         model.add(Dense(12, activation='relu'))
-        model.add(Dropout(0.1))
+        model.add(Dropout(0.2))
         model.add(Dense(self.action_size))
         model.compile(Adam(lr=0.001), 'mse')
         return model
