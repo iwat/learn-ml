@@ -11,13 +11,14 @@ from common.q_learning_agent import QLearningAgent
 
 class CartPoleAgent(QLearningAgent):
     def __init__(self, state_size, action_size):
-        super().__init__(state_size, action_size, 'models/cartpole-v1_1.h5')
+        super().__init__(state_size, action_size, 50000, 'models/cartpole-v1_1.h5')
 
     def build_model(self):
         model = Sequential()
         model.add(Dense(12, activation='relu', input_dim=self.state_size))
         model.add(Dense(12, activation='relu'))
         model.add(Dense(12, activation='relu'))
+        model.add(Dropout(0.1))
         model.add(Dense(self.action_size))
         model.compile(Adam(lr=0.001), self._huber_loss)
         return model

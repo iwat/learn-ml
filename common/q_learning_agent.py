@@ -6,7 +6,7 @@ import random
 
 
 class QLearningAgent:
-    def __init__(self, state_size, action_size, weight_file):
+    def __init__(self, state_size, action_size, queuelen, weight_file):
         self.state_size = state_size
         self.action_size = action_size
         self.weight_file = weight_file
@@ -20,7 +20,7 @@ class QLearningAgent:
 
         # agent state
         self.model = self.build_model()
-        self.memory = deque(maxlen=50000)
+        self.memory = deque(maxlen=queuelen)
         self.model.summary()
 
         # load the weights of the model if reusing previous training session
@@ -32,7 +32,7 @@ class QLearningAgent:
         return None
 
     def save_weights(self):
-        self.model.save_weights('models/cartpole-v0.h5', overwrite=True)
+        self.model.save_weights(self.weight_file, overwrite=True)
 
     def select_action(self, state, do_train=True):
         if do_train and np.random.rand() <= self.epsilon:

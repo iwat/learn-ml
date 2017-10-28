@@ -46,7 +46,7 @@ class GymRunner:
             if do_train:
                 agent.replay()
                 if episode % 10 == 0:
-                    agent.save_weights
+                    agent.save_weights()
 
             print("episode: {}/{} | score: {} | e: {:.3f}".format(
                 episode + 1, num_episodes, total_reward, agent.epsilon))
