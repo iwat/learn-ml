@@ -49,7 +49,7 @@ class GymRunner:
                     agent.save_weights()
 
             print("episode: {}/{} | score: {} | e: {:.3f}".format(
-                episode + 1, num_episodes, total_reward, agent.epsilon))
+                episode + 1, num_episodes, total_reward, agent.epsilon if do_train else 0))
 
     def close(self):
         self.env.close()
