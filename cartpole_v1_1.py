@@ -20,7 +20,7 @@ class CartPoleAgent(QLearningAgent):
         model.add(Dense(12, activation='relu'))
         model.add(Dropout(0.2))
         model.add(Dense(self.action_size))
-        model.compile(Adam(lr=0.001), self._huber_loss)
+        model.compile(optimizer=Adam(lr=0.001), loss=self._huber_loss, metrics=['accuracy'])
         return model
 
     def _huber_loss(self, y_true, y_pred):
